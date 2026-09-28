@@ -8,7 +8,7 @@ HOOK_TAG := sc: shortcut registry
 
 help:
 	@echo "Targets:"
-	@echo "  install    install sc.sh into \$$(REGISTRY_DIR), migrate data, hook bashrc"
+	@echo "  install    install sc.sh into \$$(REGISTRY_DIR), hook bashrc"
 	@echo "  uninstall  remove code (keeps data unless PURGE=1), unhook bashrc"
 	@echo "  lint       bash -n + shellcheck (if available)"
 	@echo "  test       clean-shell smoke test of sc add/list/run/rm/help"
@@ -17,13 +17,6 @@ install:
 	@mkdir -p "$(REGISTRY_DIR)"
 	@cp "$(SRC)" "$(REGISTRY_DIR)/sc.sh"
 	@chmod 644 "$(REGISTRY_DIR)/sc.sh"
-	@if [ -f "$(HOME)/.shortcuts" ] && [ ! -f "$(REGISTRY_DIR)/shortcuts" ]; then \
-		cp "$(HOME)/.shortcuts" "$(HOME)/.shortcuts.bak.$(TS)"; \
-		mv "$(HOME)/.shortcuts" "$(REGISTRY_DIR)/shortcuts"; \
-		echo "Migrated $(HOME)/.shortcuts -> $(REGISTRY_DIR)/shortcuts (backup: $(HOME)/.shortcuts.bak.$(TS))"; \
-	elif [ -f "$(HOME)/.shortcuts" ]; then \
-		echo "Both $(HOME)/.shortcuts and $(REGISTRY_DIR)/shortcuts exist; leaving both alone"; \
-	fi
 	@if [ ! -f "$(BASHRC)" ]; then touch "$(BASHRC)"; fi
 	@if grep -q "$(HOOK_TAG) BEGIN" "$(BASHRC)"; then \
 		echo "bashrc already hooked; nothing to insert"; \

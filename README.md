@@ -2,6 +2,16 @@
 
 `sc` — a tiny bash shortcut registry. Name a shell command once, run it with `sc NAME [args...]`.
 
+## Quickstart
+
+```bash
+make install
+source ~/.bashrc
+sc add hello "Say hi" :: 'echo hi-{1}'
+sc hello world   # → hi-world
+sc list
+```
+
 ## Layout
 
 Repo:
@@ -31,8 +41,7 @@ source ~/.bashrc
 This:
 
 1. Copies `src/sc.sh` → `~/.shortcut-registry/sc.sh`.
-2. Migrates legacy `~/.shortcuts` → `~/.shortcut-registry/shortcuts` if present (never overwrites; keeps a dated `~/.shortcuts.bak.YYYYMMDD-HHMMSS` copy).
-3. Appends an idempotent hook block to `~/.bashrc` (with a dated `~/.bashrc.bak.YYYYMMDD-HHMMSS` backup first). The hook references only the folder — every `*.sh` in the registry dir is sourced, so the data file is never executed:
+2. Appends an idempotent hook block to `~/.bashrc` (with a dated `~/.bashrc.bak.YYYYMMDD-HHMMSS` backup first). The hook references only the folder — every `*.sh` in the registry dir is sourced, so the data file is never executed:
 
 ```bash
 export SHORTCUT_REGISTRY_PATH="${SHORTCUT_REGISTRY_PATH:-$HOME/.shortcut-registry}"
