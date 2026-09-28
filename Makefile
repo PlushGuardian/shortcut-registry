@@ -1,5 +1,5 @@
 REGISTRY_DIR ?= $(HOME)/.shortcut-registry
-SRC := sc.sh
+SRC := src/sc.sh
 BASHRC ?= $(HOME)/.bashrc
 TS := $(shell date +%Y%m%d-%H%M%S)
 HOOK_TAG := sc: shortcut registry
